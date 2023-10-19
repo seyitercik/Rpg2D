@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -16,6 +17,9 @@ namespace DefaultNamespace
         public override void Update()
         {
             base.Update();
+            if (!player.IsGroundDetected())
+                stateMachine.ChangeState(player.airState);
+                    
             if (Input.GetKeyDown(KeyCode.Space) && player.IsGroundDetected()) 
                 stateMachine.ChangeState(player.jumpState);
         }

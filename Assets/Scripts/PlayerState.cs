@@ -23,7 +23,7 @@ public class PlayerState
     public virtual void Enter()
     {
         player.anim.SetBool(animBoolName,true);
-        rb = player.PlayerRigidbody2D;
+        rb = player.rb;
 
     }
     public virtual void Update()

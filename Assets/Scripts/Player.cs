@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DefaultNamespace;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -30,7 +29,7 @@ public class Player : MonoBehaviour
     #region Components
 
     public Animator anim { get; private set; }
-    public Rigidbody2D PlayerRigidbody2D { get; private set; }
+    public Rigidbody2D rb { get; private set; }
 
     #endregion
 
@@ -43,6 +42,7 @@ public class Player : MonoBehaviour
     public PlayerAirState airState { get; private set; }
     public PlayerDashState dashState { get; private set; }
     public PlayerWallSlideState wallSlide { get; private set; }
+    public PlayerWallJumpState wallJump { get; private set; }
     
 
     #endregion
@@ -53,15 +53,16 @@ public class Player : MonoBehaviour
         idleState = new PlayerIdleState(this,stateMachine,"Idle");
         moveState = new PlayerMoveState(this,stateMachine,"Move");
         jumpState = new PlayerJumpState(this,stateMachine,"Jump");
-        airState = new PlayerAirState(this,stateMachine,"Air");
+        airState = new PlayerAirState(this,stateMachine,"Jump");
         dashState = new PlayerDashState(this,stateMachine,"Dash");
         wallSlide = new PlayerWallSlideState(this,stateMachine,"WallSlide");
+        wallJump = new PlayerWallJumpState(this,stateMachine,"Jump");
     }
 
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
-        PlayerRigidbody2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         stateMachine.Initialize(idleState);
         
     }
@@ -75,6 +76,9 @@ public class Player : MonoBehaviour
 
     private void CheckForDashInput()
     {
+        if (IsWallDetected())
+            return;
+        
         dashUsegTimer -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsegTimer < 0)
         {
@@ -90,7 +94,7 @@ public class Player : MonoBehaviour
 
     public void SetVelocity(float xVelocity,float yVelocity)
     {
-        PlayerRigidbody2D.velocity = new Vector2(xVelocity, yVelocity);
+        rb.velocity = new Vector2(xVelocity, yVelocity);
         FlipController(xVelocity);
     }
 

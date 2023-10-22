@@ -1,4 +1,4 @@
-using UnityEngine;
+
 
 public class PlayerWallJumpState : PlayerState
         
@@ -31,12 +31,6 @@ public class PlayerWallJumpState : PlayerState
         base.Exit();
         
         
-            
         
-        
-            
-        
-                
-            
     }
 }

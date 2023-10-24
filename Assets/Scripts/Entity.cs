@@ -1,13 +1,23 @@
+using System.Collections;
 using UnityEngine;
 
 public class Entity: MonoBehaviour
 {
     [Header("Collision info")] 
+    public Transform attackCheck;
+    public float attackCheckRadius;
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected Transform wallCheck;
     [SerializeField] protected float wallCheckDistance;
     [SerializeField] protected LayerMask whatIsGround;
+
+    [Header("Knockbakc info")] 
+    [SerializeField] protected Vector2 knockbackDirection;
+
+    [SerializeField] protected float knockBackDuration;
+    protected bool isKnocked;
+    
         
     public int facingDir { get; private set; } = 1;
     protected bool facingRight = true;
@@ -16,6 +26,7 @@ public class Entity: MonoBehaviour
 
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public EntityFX fx { get; private set; }
 
     #endregion
     protected virtual void Awake()
@@ -23,18 +34,43 @@ public class Entity: MonoBehaviour
     }
     protected virtual void Start()
     {
+        fx=GetComponent<EntityFX>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
     protected virtual void Update()
     {
     }
+
+    public virtual void Damage()
+    {
+        fx.StartCoroutine("FlashFx");
+        StartCoroutine("HitKnockBack");
+        Debug.Log(gameObject.name+" was dammaged");
+    }
+
+    protected virtual IEnumerator HitKnockBack()
+    {
+        isKnocked = true;
+        rb.velocity = new Vector2(knockbackDirection.x * -facingDir, knockbackDirection.y);
+        yield return new WaitForSeconds(knockBackDuration);
+        isKnocked = false;
+    }
     #region Velocity
-    public void SetZeroVelocity() =>rb.velocity = new Vector2(0, 0);
+
+    public void SetZeroVelocity()
+    {
+        if (isKnocked)
+            return;
+        rb.velocity = new Vector2(0, 0);
+    }
    
 
     public void SetVelocity(float xVelocity,float yVelocity)
     {
+        if (isKnocked)
+            return;
+        
         rb.velocity = new Vector2(xVelocity, yVelocity);
         FlipController(xVelocity);
     }
@@ -51,6 +87,7 @@ public class Entity: MonoBehaviour
     {
         Gizmos.DrawLine(groundCheck.position,new Vector3(groundCheck.position.x,groundCheck.position.y-groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position,new Vector3(wallCheck.position.x + wallCheckDistance,wallCheck.position.y));
+        Gizmos.DrawWireSphere(attackCheck.position,attackCheckRadius);
     }
     #endregion
         

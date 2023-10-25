@@ -1,4 +1,4 @@
-namespace DefaultNamespace
+namespace Enemy.Skeleton
 {
     public class SkeletonIdleState : SkeletonGroundedState
     {

@@ -1,4 +1,7 @@
-namespace DefaultNamespace
+using UnityEngine;
+using Input = UnityEngine.Input;
+
+namespace Enemy.Skeleton
 {
     public class Enemy_Skeleton : Enemy
     {
@@ -8,6 +11,7 @@ namespace DefaultNamespace
         public SkeletonMoveState moveState { get; private set; }
         public SkeletonBattleState battleState { get; private set; }
         public SkeletonAttackState attackState { get; private set; }
+        public SkeletonStunnedState stunnedState { get; private set; }
 
         #endregion
         protected override void Awake()
@@ -17,6 +21,7 @@ namespace DefaultNamespace
             moveState = new SkeletonMoveState(this, stateMachine, "Move", this);
             battleState = new SkeletonBattleState(this, stateMachine, "Move", this);
             attackState = new SkeletonAttackState(this, stateMachine, "Attack", this);
+            stunnedState = new SkeletonStunnedState(this, stateMachine, "Stunned", this);
         }
 
         protected override void Start()
@@ -28,6 +33,21 @@ namespace DefaultNamespace
         protected override void Update()
         {
             base.Update();
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                stateMachine.ChangeState(stunnedState);
+            }
+        }
+
+        protected override bool CanBeStunned()
+        {
+            if (base.CanBeStunned())
+            {
+                stateMachine.ChangeState(stunnedState);
+                return true;
+            }
+
+            return false;
         }
     }
 }

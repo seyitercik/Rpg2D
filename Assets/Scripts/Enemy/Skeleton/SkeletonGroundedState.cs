@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Enemy.Skeleton
 {
     public class SkeletonGroundedState : EnemyState
     {

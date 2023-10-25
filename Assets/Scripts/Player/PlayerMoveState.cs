@@ -1,26 +1,29 @@
-public class PlayerMoveState : PlayerGroundedState
+namespace Player
 {
-    public PlayerMoveState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+    public class PlayerMoveState : PlayerGroundedState
     {
-    }
+        public PlayerMoveState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+        {
+        }
 
-    public override void Enter()
-    {
-        base.Enter();
-    }
+        public override void Enter()
+        {
+            base.Enter();
+        }
 
-    public override void Update()
-    {
+        public override void Update()
+        {
         
-        base.Update();
+            base.Update();
         
-        player.SetVelocity(xInput * player.moveSpeed,rb.velocity.y);
-        if (xInput==0 || player.IsWallDetected())
-            stateMachine.ChangeState(player.idleState);
-    }
+            player.SetVelocity(xInput * player.moveSpeed,rb.velocity.y);
+            if (xInput==0 || player.IsWallDetected())
+                stateMachine.ChangeState(player.idleState);
+        }
 
-    public override void Exit()
-    {
-        base.Exit();
+        public override void Exit()
+        {
+            base.Exit();
+        }
     }
 }

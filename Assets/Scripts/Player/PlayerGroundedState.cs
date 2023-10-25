@@ -1,33 +1,36 @@
 using UnityEngine;
 
-public class PlayerGroundedState : PlayerState
+namespace Player
 {
-    public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+    public class PlayerGroundedState : PlayerState
     {
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Update()
-    {
-        
-        base.Update();
-        if (Input.GetKey(KeyCode.Mouse0))
+        public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
         {
-            stateMachine.ChangeState(player.primaryAttcak);
         }
-        if (!player.IsGroundDetected())
-            stateMachine.ChangeState(player.airState);
-                    
-        if (Input.GetKeyDown(KeyCode.Space) && player.IsGroundDetected()) 
-            stateMachine.ChangeState(player.jumpState);
-    }
 
-    public override void Exit()
-    {
-        base.Exit();
+        public override void Enter()
+        {
+            base.Enter();
+        }
+
+        public override void Update()
+        {
+        
+            base.Update();
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                stateMachine.ChangeState(player.primaryAttcak);
+            }
+            if (!player.IsGroundDetected())
+                stateMachine.ChangeState(player.airState);
+                    
+            if (Input.GetKeyDown(KeyCode.Space) && player.IsGroundDetected()) 
+                stateMachine.ChangeState(player.jumpState);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+        }
     }
 }

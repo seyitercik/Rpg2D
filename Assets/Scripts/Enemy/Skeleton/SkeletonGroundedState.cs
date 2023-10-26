@@ -13,7 +13,7 @@ namespace Enemy.Skeleton
         public override void Enter()
         {
             base.Enter();
-            player = GameObject.Find("Player").transform;
+            player = PlayerManager.instance.player.transform; 
 
         }
 

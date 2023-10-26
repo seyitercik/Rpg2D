@@ -37,9 +37,11 @@ namespace Enemy.Skeleton
             {
                 stateMachine.ChangeState(stunnedState);
             }
+            
+                
         }
 
-        protected override bool CanBeStunned()
+        public override bool CanBeStunned()
         {
             if (base.CanBeStunned())
             {

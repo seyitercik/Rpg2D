@@ -20,7 +20,6 @@ namespace Player
             this.player = _player;
             this.stateMachine = _stateMachine;
             this.animBoolName = _animBoolName;
-        
         }
 
         public virtual void Enter()

@@ -17,16 +17,16 @@ public class Skill : MonoBehaviour
    {
       if (coolDownTimer < 0 )
       {
-         UserSkill();
+         UseSkill();
          coolDownTimer = coolDown;
          return true;
       }
-      Debug.Log("Skill is on cool down");
+      
 
       return false;
    }
 
-   public virtual void UserSkill()
+   public virtual void UseSkill()
    {
       //do some skill spesific things
    }

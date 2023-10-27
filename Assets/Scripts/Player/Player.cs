@@ -15,9 +15,6 @@ namespace Player
         public float moveSpeed = 12f;
         public float jumpForce;
         [Header("Dash info")] 
-        [SerializeField] private float dashCoolDown;
-
-        private float dashUsegTimer;
         public float dashSpeed;
         public float dashDuration;
         public float dashDir{ get; private set; }
@@ -37,6 +34,7 @@ namespace Player
     
 
         #endregion
+        public SkillManager skill { get; private set; }
     
         protected override void Awake()
         {
@@ -57,6 +55,7 @@ namespace Player
         protected override void Start()
         {
             base.Start();
+            skill = SkillManager.instance;
             stateMachine.Initialize(idleState);
         }
 
@@ -80,10 +79,10 @@ namespace Player
         {
             if (IsWallDetected())
                 return;
-            dashUsegTimer -= Time.deltaTime;
-            if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsegTimer < 0)
+            
+            if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
             {
-                dashUsegTimer = dashCoolDown;
+                
                 dashDir = Input.GetAxisRaw("Horizontal");
                 if (dashDir == 0)
                     dashDir = facingDir;

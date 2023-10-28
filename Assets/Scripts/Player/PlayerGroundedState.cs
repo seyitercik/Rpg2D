@@ -17,9 +17,15 @@ namespace Player
         {
         
             base.Update();
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 stateMachine.ChangeState(player.counterAttack);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                stateMachine.ChangeState(player.aimSword);
+                
             }
             if (Input.GetKey(KeyCode.Mouse0))
             {

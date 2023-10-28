@@ -1,33 +1,41 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill : MonoBehaviour
+namespace Skills
 {
-   [SerializeField] protected float coolDown;
-   protected float coolDownTimer;
-
-   protected virtual void Update()
+   public class Skill : MonoBehaviour
    {
-      coolDownTimer -= Time.deltaTime;
-   }
+      [SerializeField] protected float coolDown;
+      protected float coolDownTimer;
 
-   public virtual bool CanUseSkill()
-   {
-      if (coolDownTimer < 0 )
+      protected Player.Player player;
+
+      protected void Start()
       {
-         UseSkill();
-         coolDownTimer = coolDown;
-         return true;
+         player = PlayerManager.instance.player;
       }
+
+      protected virtual void Update()
+      {
+         coolDownTimer -= Time.deltaTime;
+      }
+
+      public virtual bool CanUseSkill()
+      {
+         if (coolDownTimer < 0 )
+         {
+            UseSkill();
+            coolDownTimer = coolDown;
+            return true;
+         }
       
 
-      return false;
-   }
+         return false;
+      }
 
-   public virtual void UseSkill()
-   {
-      //do some skill spesific things
+      public virtual void UseSkill()
+      {
+         //do some skill spesific things
+      }
    }
 }

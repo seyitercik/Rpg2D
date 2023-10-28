@@ -1,7 +1,10 @@
-public class Dash_Skill : Skill
+namespace Skills
 {
-    public override void UseSkill()
+    public class Dash_Skill : Skill
     {
-        base.UseSkill();
+        public override void UseSkill()
+        {
+            base.UseSkill();
+        }
     }
 }

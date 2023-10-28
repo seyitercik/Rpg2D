@@ -1,3 +1,4 @@
+using Skills;
 using UnityEngine;
 
 namespace Player
@@ -20,6 +21,11 @@ namespace Player
                                         hit.GetComponent<Enemy.Enemy>().Damage();
                         }
                        
+                }
+
+                private void ThrowSword()
+                {
+                        SkillManager.instance.sword.CreateSword();
                 }
         }
 }

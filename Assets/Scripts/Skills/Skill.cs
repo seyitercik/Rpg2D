@@ -10,7 +10,7 @@ namespace Skills
 
       protected Player.Player player;
 
-      protected void Start()
+      protected virtual void Start()
       {
          player = PlayerManager.instance.player;
       }

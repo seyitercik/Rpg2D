@@ -1,10 +1,38 @@
 using Skills.Skill_Controllers;
 using UnityEngine;
 
+
 namespace Skills
 {
+
+   public enum SwordType
+   {
+      Regular,
+      Bounce,
+      Pierce,
+      Spin
+   }
+   
+   
+   
+   
    public class Sword_Skill : Skill
    {
+      [SerializeField] public SwordType swordType = SwordType.Regular;
+      [Header("Bounce info")] 
+      [SerializeField] private int bounceAmount;
+      [SerializeField] private float bounceGravity;
+
+      [Header("Peirce info")] 
+      [SerializeField] private int pierceAmount;
+      [SerializeField] private float pierceGravity;
+
+      [Header("Spin info")] 
+      [SerializeField] private float maxTravelDistance = 7;
+      [SerializeField] private float spinDuration = 2;
+      [SerializeField] private float spinGravity=1;
+      [SerializeField] private float hitCooldown=.35f;
+      
       [Header("Skill info")] 
       [SerializeField] private GameObject swordPrefab; 
       [SerializeField] private Vector2 launchForce;
@@ -23,6 +51,18 @@ namespace Skills
       {
          base.Start();
          GenerateDots();
+         SetupGravity();
+      }
+
+      private void SetupGravity()
+      {
+         if (swordType == SwordType.Bounce)
+            swordGravity = bounceGravity;
+         else if (swordType == SwordType.Pierce)
+            swordGravity = pierceGravity;
+         else if (swordType == SwordType.Spin)
+            swordGravity = spinGravity;
+         
       }
 
       protected override void Update()
@@ -46,10 +86,29 @@ namespace Skills
       {
          GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
          Sword_Skill_Controller newSwordScripts = newSword.GetComponent<Sword_Skill_Controller>();
+
+         if (swordType==SwordType.Bounce)
+            newSwordScripts.SetupBounce(true,bounceAmount);
+         
+         else if (swordType==SwordType.Pierce)
+            newSwordScripts.SetupPierce(pierceAmount);
+         else if (swordType==SwordType.Spin)
+            newSwordScripts.SetupSpip(true,maxTravelDistance,spinDuration,hitCooldown);
+               
+            
+            
+         
+         
          newSwordScripts.SetupSword(finalDir,swordGravity,player);
          player.AssingNewSword(newSword);
          DotsActive(false);
       }
+
+      #region Aim Region
+
+      
+
+      
 
       public Vector2 AimDirection()
       {
@@ -85,5 +144,6 @@ namespace Skills
             AimDirection().normalized.y * launchForce.y) * t + .5f * Physics2D.gravity * swordGravity * (t * t);
          return position;
       }
+      #endregion
    }
 }

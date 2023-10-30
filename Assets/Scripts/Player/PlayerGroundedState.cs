@@ -1,3 +1,4 @@
+using Skills.Skill_Controllers;
 using UnityEngine;
 
 namespace Player
@@ -22,7 +23,7 @@ namespace Player
                 stateMachine.ChangeState(player.counterAttack);
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q) && HasNoSword())
             {
                 stateMachine.ChangeState(player.aimSword);
                 
@@ -36,6 +37,17 @@ namespace Player
                     
             if (Input.GetKeyDown(KeyCode.Space) && player.IsGroundDetected()) 
                 stateMachine.ChangeState(player.jumpState);
+        }
+
+        private bool HasNoSword()
+        {
+            if (!player.sword)
+            {
+                return true;
+            }
+            player.sword.GetComponent<Sword_Skill_Controller>().ReturnSword();
+
+            return false;
         }
 
         public override void Exit()

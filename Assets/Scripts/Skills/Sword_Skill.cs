@@ -1,5 +1,5 @@
+using Skills.Skill_Controllers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Skills
 {
@@ -27,7 +27,7 @@ namespace Skills
 
       protected override void Update()
       {
-         if (Input.GetKeyUp(KeyCode.Q))
+         if (Input.GetKey(KeyCode.Q))
             finalDir = new Vector2(AimDirection().normalized.x * launchForce.x,
                AimDirection().normalized.y * launchForce.y);
          if (Input.GetKey(KeyCode.Q))
@@ -46,7 +46,8 @@ namespace Skills
       {
          GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
          Sword_Skill_Controller newSwordScripts = newSword.GetComponent<Sword_Skill_Controller>();
-         newSwordScripts.SetupSword(finalDir,swordGravity);
+         newSwordScripts.SetupSword(finalDir,swordGravity,player);
+         player.AssingNewSword(newSword);
          DotsActive(false);
       }
 

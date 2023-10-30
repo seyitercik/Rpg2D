@@ -15,6 +15,7 @@ namespace Player
         [Header("Move info")] 
         public float moveSpeed = 12f;
         public float jumpForce;
+        public float swordReturnImpact;
         [Header("Dash info")] 
         public float dashSpeed;
         public float dashDuration;
@@ -38,6 +39,7 @@ namespace Player
 
         #endregion
         public SkillManager skill { get; private set; }
+        public GameObject sword { get; private set; }
     
         protected override void Awake()
         {
@@ -69,6 +71,18 @@ namespace Player
              base.Update();
             stateMachine.currentState.Update();
             CheckForDashInput();
+        }
+
+        public void AssingNewSword(GameObject _newSowrd)
+        {
+            sword = _newSowrd;
+            
+        }
+
+        public void CatchTheSword()
+        {
+            stateMachine.ChangeState(catchSword);
+            Destroy(sword);
         }
 
         public IEnumerator BusyFor(float _second)

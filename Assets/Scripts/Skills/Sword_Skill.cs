@@ -19,9 +19,11 @@ namespace Skills
    public class Sword_Skill : Skill
    {
       [SerializeField] public SwordType swordType = SwordType.Regular;
+      
       [Header("Bounce info")] 
       [SerializeField] private int bounceAmount;
       [SerializeField] private float bounceGravity;
+      [SerializeField] private float bounceSpeed;
 
       [Header("Peirce info")] 
       [SerializeField] private int pierceAmount;
@@ -33,16 +35,22 @@ namespace Skills
       [SerializeField] private float spinGravity=1;
       [SerializeField] private float hitCooldown=.35f;
       
-      [Header("Skill info")] 
-      [SerializeField] private GameObject swordPrefab; 
-      [SerializeField] private Vector2 launchForce;
-      [SerializeField] private float swordGravity;
-
       [Header("Aim Dots info")] 
       [SerializeField] private int numberOfDots;
       [SerializeField] private float spaceBeetwenDots;
       [SerializeField] private GameObject dotPrefab;
       [SerializeField] private Transform dotsParrent;
+      
+      [Header("Skill info")] 
+      [SerializeField] private GameObject swordPrefab; 
+      [SerializeField] private Vector2 launchForce;
+      [SerializeField] private float swordGravity;
+      [SerializeField] private float freezeTimeDuration;
+      [SerializeField] private float returnSpeed;
+
+     
+      
+      
       private GameObject[] dots;
 
       private Vector2 finalDir;
@@ -88,7 +96,7 @@ namespace Skills
          Sword_Skill_Controller newSwordScripts = newSword.GetComponent<Sword_Skill_Controller>();
 
          if (swordType==SwordType.Bounce)
-            newSwordScripts.SetupBounce(true,bounceAmount);
+            newSwordScripts.SetupBounce(true,bounceAmount,bounceSpeed);
          
          else if (swordType==SwordType.Pierce)
             newSwordScripts.SetupPierce(pierceAmount);
@@ -99,7 +107,7 @@ namespace Skills
             
          
          
-         newSwordScripts.SetupSword(finalDir,swordGravity,player);
+         newSwordScripts.SetupSword(finalDir,swordGravity,player,freezeTimeDuration,returnSpeed);
          player.AssingNewSword(newSword);
          DotsActive(false);
       }

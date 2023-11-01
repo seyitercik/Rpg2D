@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Player
 {
     public class PlayerDashState : PlayerState
@@ -9,7 +11,7 @@ namespace Player
         public override void Enter()
         {
             base.Enter();
-            player.skill.clone.CreateClone(player.transform);
+            player.skill.clone.CreateClone(player.transform,Vector2.zero);
             stateTimer = player.dashDuration;
         }
 

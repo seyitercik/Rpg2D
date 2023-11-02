@@ -35,6 +35,7 @@ namespace Player
         public PlayerCounterAttackState counterAttack { get; private set; }
         public PlayerAimSwordState aimSword { get; private set; }
         public PlayerCatchSwordState catchSword { get; private set; }
+        public PlayerBlackholeState blackhole { get; private set; }
     
 
         #endregion
@@ -57,6 +58,7 @@ namespace Player
             counterAttack = new PlayerCounterAttackState(this,stateMachine,"CounterAttack");
             aimSword = new PlayerAimSwordState(this,stateMachine,"AimSword");
             catchSword = new PlayerCatchSwordState(this,stateMachine,"CatchSword");
+            blackhole = new PlayerBlackholeState(this,stateMachine,"Jump");
         }
 
         protected override void Start()
@@ -83,6 +85,11 @@ namespace Player
         {
             stateMachine.ChangeState(catchSword);
             Destroy(sword);
+        }
+
+        public void ExitBlackhole()
+        {
+            stateMachine.ChangeState(airState);
         }
 
         public IEnumerator BusyFor(float _second)

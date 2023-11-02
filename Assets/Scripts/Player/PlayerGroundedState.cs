@@ -18,6 +18,10 @@ namespace Player
         {
         
             base.Update();
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                stateMachine.ChangeState(player.blackhole);
+            }
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 stateMachine.ChangeState(player.counterAttack);

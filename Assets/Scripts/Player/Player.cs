@@ -73,6 +73,10 @@ namespace Player
              base.Update();
             stateMachine.currentState.Update();
             CheckForDashInput();
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                skill.crystal.CanUseSkill();
+            }
         }
 
         public void AssingNewSword(GameObject _newSowrd)
@@ -87,10 +91,7 @@ namespace Player
             Destroy(sword);
         }
 
-        public void ExitBlackhole()
-        {
-            stateMachine.ChangeState(airState);
-        }
+       
 
         public IEnumerator BusyFor(float _second)
         {

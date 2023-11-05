@@ -34,7 +34,7 @@ namespace Skills.Skill_Controllers
          }
       }
 
-      public void SetupClone(Transform _newTransform, float _cloneDuration, bool _canAttack, Vector3 _offset)
+      public void SetupClone(Transform _newTransform, float _cloneDuration, bool _canAttack, Vector3 _offset,Transform _closestEnemy)
       {
          if (_canAttack)
          {
@@ -43,6 +43,7 @@ namespace Skills.Skill_Controllers
 
          transform.position = _newTransform.position+_offset;
          cloneTimer = _cloneDuration;
+         closestEnemy = _closestEnemy;
 
 
          FaceClosestTarget();
@@ -68,21 +69,6 @@ namespace Skills.Skill_Controllers
 
       private void FaceClosestTarget()
       {
-         Collider2D[] coliders = Physics2D.OverlapCircleAll(transform.position, 25);
-         float closestDistance = Mathf.Infinity;
-         foreach (var hit in coliders)
-         {
-            if (hit.GetComponent<Enemy.Enemy>() != null)
-            {
-               float distanceToEnemy = Vector2.Distance(transform.position, hit.transform.position);
-               if (distanceToEnemy < closestDistance)
-               {
-                  closestDistance = distanceToEnemy;
-                  closestEnemy = hit.transform;
-
-               }
-            }
-         }
 
          if (closestEnemy != null)
          {

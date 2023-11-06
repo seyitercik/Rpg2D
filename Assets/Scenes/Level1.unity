@@ -10452,6 +10452,8 @@ MonoBehaviour:
   clonePrefab: {fileID: 7534266856461705863, guid: 2626fe7d02998a642899212506e6fdbe, type: 3}
   cloneDuration: 1.2
   canAttack: 1
+  createCloneOnDashStart: 0
+  createCloneOnDashOver: 0
 --- !u!114 &1682047111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10516,12 +10518,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8918d0b06f19184baa2cc4f77a33709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coolDown: 0
+  coolDown: 5
   crystalprefab: {fileID: 4953877970149452074, guid: 012b549dcbb0a7f49bc24bb8aaed82ef, type: 3}
   crystalDuration: 2
   canExplode: 1
   canMoveToEnemy: 1
   moveSpeed: 5
+  canUseMultiStack: 1
+  amountOfStack: 4
+  multiStackCooldowm: 4
+  useTimeWindow: 2.5
+  crystalLeft:
+  - {fileID: 4953877970149452074, guid: 012b549dcbb0a7f49bc24bb8aaed82ef, type: 3}
+  - {fileID: 4953877970149452074, guid: 012b549dcbb0a7f49bc24bb8aaed82ef, type: 3}
+  - {fileID: 4953877970149452074, guid: 012b549dcbb0a7f49bc24bb8aaed82ef, type: 3}
+  - {fileID: 4953877970149452074, guid: 012b549dcbb0a7f49bc24bb8aaed82ef, type: 3}
 --- !u!212 &1682047114
 SpriteRenderer:
   m_ObjectHideFlags: 0

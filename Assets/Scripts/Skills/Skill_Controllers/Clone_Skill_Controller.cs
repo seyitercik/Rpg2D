@@ -77,6 +77,11 @@ namespace Skills.Skill_Controllers
                transform.Rotate(0, 180, 0);
 
             }
+            /*if (transform.position.x < closestEnemy.position.x)
+            {
+               transform.Rotate(0, -180, 0);
+
+            }*/
          }
 
       }

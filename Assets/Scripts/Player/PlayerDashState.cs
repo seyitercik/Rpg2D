@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Player
@@ -11,7 +12,7 @@ namespace Player
         public override void Enter()
         {
             base.Enter();
-            player.skill.clone.CreateClone(player.transform,Vector2.zero);
+            player.skill.clone.CreateCloneOnDashStart();
             stateTimer = player.dashDuration;
         }
 
@@ -28,6 +29,7 @@ namespace Player
         public override void Exit()
         {
             base.Exit();
+            player.skill.clone.CreateCloneOnDashOver();
             player.SetVelocity(0,rb.velocity.y);
         }
     }

@@ -1,9 +1,11 @@
+using Unity.Collections;
 using UnityEngine;
 
 namespace Player
 {
     public class PlayerCounterAttackState : PlayerState
     {
+        
         public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
         {
         }
@@ -28,6 +30,7 @@ namespace Player
                     {
                         stateTimer = 10;
                         player.anim.SetBool("SuccessfulCounterAttack",true);
+                        player.skill.clone.CreateCloneOnCounterAttack(hit.transform);
                     }
                 }
             }

@@ -1,10 +1,11 @@
-using Unity.Collections;
+
 using UnityEngine;
 
 namespace Player
 {
     public class PlayerCounterAttackState : PlayerState
     {
+        private bool canCreateClone;
         
         public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
         {
@@ -13,6 +14,7 @@ namespace Player
         public override void Enter()
         {
             base.Enter();
+            canCreateClone = true;
             stateTimer = player.counterAttackDuration;
             player.anim.SetBool("SuccessfulCounterAttack",false);
         }
@@ -30,7 +32,12 @@ namespace Player
                     {
                         stateTimer = 10;
                         player.anim.SetBool("SuccessfulCounterAttack",true);
-                        player.skill.clone.CreateCloneOnCounterAttack(hit.transform);
+                        if (canCreateClone)
+                        {
+                            canCreateClone = false;
+                            player.skill.clone.CreateCloneOnCounterAttack(hit.transform);
+                        }
+                        
                     }
                 }
             }

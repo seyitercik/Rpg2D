@@ -4,12 +4,15 @@ using Skills;
 using Unity.Mathematics;
 using UnityEngine;
 
+
 public class Crystal_Skill : Skill
 {
     [SerializeField] private GameObject crystalprefab;
     [SerializeField] private float crystalDuration;
     private GameObject currentCrystal;
     private Crystal_Skill_Controller currentCrystalController;
+    [Header("Crystal mirage")]
+    [SerializeField] private bool cloneInsteadOfCrystal;
 
     [Header("Explosive crystal")] 
     [SerializeField] private bool canExplode;
@@ -29,14 +32,16 @@ public class Crystal_Skill : Skill
     public override void UseSkill()
     {
         base.UseSkill();
+        
         if(CanUsemultiCrystal())
             return; 
         
         if (currentCrystal==null)
         {
-            currentCrystal = Instantiate(crystalprefab,player.transform.position,quaternion.identity);
+            currentCrystal = Instantiate(crystalprefab,player.transform.position,Quaternion.identity);
             currentCrystalController = currentCrystal.GetComponent<Crystal_Skill_Controller>();
-            currentCrystalController.SetupCrystal(crystalDuration,moveSpeed,canExplode,canMoveToEnemy,FindClosestEnemy(currentCrystal.transform));
+            currentCrystalController.SetupCrystal(crystalDuration,moveSpeed,canExplode,
+                canMoveToEnemy,FindClosestEnemy(currentCrystal.transform));
         }
         else
         {
@@ -46,7 +51,18 @@ public class Crystal_Skill : Skill
             Vector2 playerPos = player.transform.position;
             player.transform.position = currentCrystal.transform.position;
             currentCrystal.transform.position = playerPos;
-            currentCrystalController.GetComponent<Crystal_Skill_Controller>()?.FinishCrystal();
+
+            if (cloneInsteadOfCrystal)
+            {
+                SkillManager.instance.clone.CreateClone(currentCrystal.transform,Vector3.zero);
+                Destroy(currentCrystal);
+            }
+            else
+            {
+                
+                currentCrystalController.GetComponent<Crystal_Skill_Controller>()?.FinishCrystal();
+            }
+            
         }
     }
 

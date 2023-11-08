@@ -12,15 +12,18 @@ namespace Skills
         [Space]
         [SerializeField] private bool canAttack;
 
+        [SerializeField] private float chanceToDublicate;
         [SerializeField] private bool createCloneOnDashStart;
         [SerializeField] private bool createCloneOnDashOver;
         [SerializeField] private bool canCreateCloneOnCounterAttack;
+        [SerializeField] private bool canDublicateClone;
     
 
         public void CreateClone(Transform _clonePosition,Vector3 _offset)
         {
             GameObject newClone = Instantiate(clonePrefab);
-            newClone.GetComponent<Clone_Skill_Controller>().SetupClone(_clonePosition,cloneDuration,canAttack,_offset,FindClosestEnemy(newClone.transform));
+            newClone.GetComponent<Clone_Skill_Controller>().SetupClone(_clonePosition,
+                cloneDuration,canAttack,_offset,FindClosestEnemy(newClone.transform),canDublicateClone,chanceToDublicate);
         }
 
         public void CreateCloneOnDashStart()
@@ -38,7 +41,9 @@ namespace Skills
         {
             if (canCreateCloneOnCounterAttack)
             {
-                StartCoroutine(CreateCloneWithDelay(_enemyTransform, new Vector3(2 * player.facingDir, 0)));
+                Vector3 offset = new Vector3(2 * player.facingDir, 0);
+                StartCoroutine(CreateCloneWithDelay(_enemyTransform, offset));
+                Debug.Log(offset);
 
             }
         }

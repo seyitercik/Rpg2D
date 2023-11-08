@@ -15,6 +15,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
     private bool canGrow;
     private float growSpeed = 5;
     private Transform closestTarget;
+    
     public void SetupCrystal(float _crytalDuration,float _moveSpeed,bool _canExplode, bool _canMove,Transform _closestTarget)
     {
         crystalExistTimer = _crytalDuration;

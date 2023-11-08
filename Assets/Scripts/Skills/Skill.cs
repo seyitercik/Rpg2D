@@ -5,6 +5,7 @@ namespace Skills
    public class Skill : MonoBehaviour
    {
       [SerializeField] protected float coolDown;
+      
       protected float coolDownTimer;
 
       protected Player.Player player;

@@ -151,6 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564d2d94f914af144b7a8cac10b8139a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorLosingSpeed: 1
+  colorLoosingSpeed: 1
   attackCheck: {fileID: 6414886585212413265}
   attackCheckRadius: 0.8

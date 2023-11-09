@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1291180798740299559}
   - component: {fileID: 9198040323416760435}
   - component: {fileID: 1353950464503785215}
+  - component: {fileID: 7230183697679148781}
   m_Layer: 7
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -52,6 +53,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732cadb79ba34f2891fda20c742ab3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDirection: {x: 7, y: 12}
+  knockbackDuration: 0.5
   attackCheck: {fileID: 1033913174704032202}
   attackCheckRadius: 0.8
   groundCheck: {fileID: 7117889468761812674}
@@ -61,8 +64,6 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  knockbackDirection: {x: 7, y: 12}
-  knockBackDuration: 0.7
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
@@ -161,6 +162,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashDuration: 0.2
   hitMaterial: {fileID: 2100000, guid: 68499ae918565064490e4e5c28bd957e, type: 2}
+--- !u!114 &7230183697679148781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333746348446600292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94072dd461d34b0191b40a81b9036472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage:
+    baseValue: 0
+    modifiers: 
+  maxHealth:
+    baseValue: 0
+    modifiers: 
+  currentHealth: 0
 --- !u!1 &4471623167715795222
 GameObject:
   m_ObjectHideFlags: 0

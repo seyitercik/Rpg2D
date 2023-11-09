@@ -1,63 +1,68 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Skills
+public class Skill : MonoBehaviour
 {
-   public class Skill : MonoBehaviour
-   {
-      [SerializeField] protected float coolDown;
-      
-      protected float coolDownTimer;
+    [SerializeField] protected float cooldown;
+    protected float cooldownTimer;
 
-      protected Player.Player player;
+    protected Player.Player player;
+    
 
-      protected virtual void Start()
-      {
-         player = PlayerManager.instance.player;
-      }
+    protected virtual void Start()
+    {
+        player = PlayerManager.instance.player;
+        
+    }
 
-      protected virtual void Update()
-      {
-         coolDownTimer -= Time.deltaTime;
-      }
+    protected virtual void Update()
+    {
+        cooldownTimer -= Time.deltaTime;
+    }
 
-      public virtual bool CanUseSkill()
-      {
-         if (coolDownTimer < 0 )
-         {
+
+    public virtual bool CanUseSkill()
+    {
+        if (cooldownTimer < 0)
+        {
             UseSkill();
-            coolDownTimer = coolDown;
+            cooldownTimer = cooldown;
             return true;
-         }
-      
+        }
 
-         return false;
-      }
 
-      public virtual void UseSkill()
-      {
-         //do some skill spesific things
-      }
+        Debug.Log("Skill is on cooldown");
+        return false;
+    }
 
-      protected virtual Transform FindClosestEnemy(Transform _checkTransform)
-      {
-         Collider2D[] coliders = Physics2D.OverlapCircleAll(_checkTransform.position, 25);
-         float closestDistance = Mathf.Infinity;
-         Transform closestEnemy = null;
-         foreach (var hit in coliders)
-         {
+    public virtual void UseSkill()
+    {
+        // do some skill spesific things
+    }
+
+    protected virtual Transform FindClosestEnemy(Transform _checkTransform)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(_checkTransform.position, 25);
+
+        float closestDistance = Mathf.Infinity;
+        Transform closestEnemy = null;
+
+        foreach (var hit in colliders)
+        {
             if (hit.GetComponent<Enemy.Enemy>() != null)
             {
-               float distanceToEnemy = Vector2.Distance(_checkTransform.position, hit.transform.position);
-               if (distanceToEnemy < closestDistance)
-               {
-                  closestDistance = distanceToEnemy;
-                  closestEnemy = hit.transform;
+                float distanceToEnemy = Vector2.Distance(_checkTransform.position, hit.transform.position);
 
-               }
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    closestEnemy = hit.transform;
+                }
+
             }
-         }
+        }
 
-         return closestEnemy;
-      }
-   }
+        return closestEnemy;
+    }
 }

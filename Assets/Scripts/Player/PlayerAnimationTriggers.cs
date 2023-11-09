@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using Skills;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace Player
 {
         public class PlayerAnimationTriggers : MonoBehaviour
         {
-                private Player player => GetComponentInParent<Player>();
+                private Player player => GetComponentInParent<global::Player.Player>();
         
                 private void AnimationTrigger()
                 {
@@ -14,11 +15,18 @@ namespace Player
 
                 private void AttackTrigger()
                 {
-                        Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, player.attackCheckRadius);
+                        Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, 
+                                player.attackCheckRadius);
                         foreach (var hit in colliders)
                         {
-                                if(hit.GetComponent<Enemy.Enemy>() != null)
-                                        hit.GetComponent<Enemy.Enemy>().Damage();
+                                if (hit.GetComponent<Enemy.Enemy>() != null)
+                                {
+                                        EnemyStats _target = hit.GetComponent<EnemyStats>();
+                                        player.stats.DoDamage(_target);
+                                       // hit.GetComponent<Enemy.Enemy>().Damage();
+                                        
+                                        
+                                }
                         }
                        
                 }

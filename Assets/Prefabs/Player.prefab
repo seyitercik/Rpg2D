@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 8914273880324677155}
   - component: {fileID: 6343622282231947541}
   - component: {fileID: 4915191681379426537}
+  - component: {fileID: 20202244281482093}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -145,6 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a13c36aaef56b419eb037569969e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDirection: {x: 0, y: 0}
+  knockbackDuration: 0
   attackCheck: {fileID: 5677719855915867987}
   attackCheckRadius: 0.8
   groundCheck: {fileID: 166648120020462226}
@@ -154,8 +157,6 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  knockbackDirection: {x: 0, y: 0}
-  knockBackDuration: 0
   attackMovement:
   - {x: 3, y: 1.5}
   - {x: 1, y: 2.5}
@@ -242,6 +243,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashDuration: 0.2
   hitMaterial: {fileID: 2100000, guid: 68499ae918565064490e4e5c28bd957e, type: 2}
+--- !u!114 &20202244281482093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333546688759566027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4262a025386440b99c384b87051a0275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage:
+    baseValue: 0
+    modifiers: 
+  maxHealth:
+    baseValue: 0
+    modifiers: 
+  currentHealth: 0
 --- !u!1 &5448280823137834597
 GameObject:
   m_ObjectHideFlags: 0

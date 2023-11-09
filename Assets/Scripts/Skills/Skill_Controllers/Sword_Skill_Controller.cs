@@ -187,7 +187,7 @@ namespace Skills.Skill_Controllers
                     foreach (var hit in colliders)
                     {
                         if (hit.GetComponent<Enemy.Enemy>() != null)
-                            hit.GetComponent<Enemy.Enemy>().Damage();
+                            hit.GetComponent<Enemy.Enemy>().DamageEffect();
                         
                     }
                 }
@@ -210,7 +210,7 @@ namespace Skills.Skill_Controllers
 
         private void SwordSkillDamage(Enemy.Enemy enemy)
         {
-            enemy.Damage();
+            enemy.DamageEffect();
             enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration);
         }
 

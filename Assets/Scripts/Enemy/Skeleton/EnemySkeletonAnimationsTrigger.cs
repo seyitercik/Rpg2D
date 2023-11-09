@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 
 namespace Enemy.Skeleton
@@ -15,8 +16,12 @@ namespace Enemy.Skeleton
             Collider2D[] colliders = Physics2D.OverlapCircleAll(enemy.attackCheck.position, enemy.attackCheckRadius);
             foreach (var hit in colliders)
             {
-                if(hit.GetComponent<Player.Player>() != null)
-                    hit.GetComponent<Player.Player>().Damage();
+                if (hit.GetComponent<Player.Player>() != null)
+                {
+                    PlayerStats target = hit.GetComponent<PlayerStats>(); 
+                    enemy.stats.DoDamage(target);
+                }
+                  //  hit.GetComponent<Player.Player>().Damage();
             }
                        
         }

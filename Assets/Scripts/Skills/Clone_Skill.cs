@@ -1,59 +1,66 @@
+using System;
 using System.Collections;
-using Skills.Skill_Controllers;
+using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
+using Skills;
 using UnityEngine;
 
-namespace Skills
+public class Clone_Skill : Skill
 {
-    public class Clone_Skill : Skill
+
+
+    [Header("Clone info")]
+    [SerializeField] private GameObject clonePrefab;
+    [SerializeField] private float cloneDuration;
+    [Space]
+    [SerializeField] private bool canAttack;
+
+    [SerializeField] private bool creatCloneOnDashStart;
+    [SerializeField] private bool createCloneOnDashOver;
+    [SerializeField] private bool canCreateCloneOnCounterAttack;
+    [Header("Clone can duplicate")]
+    [SerializeField] private bool canDuplicateClone;
+    [SerializeField] private float chanceToDuplicate;
+    [Header("Crystal instead of clone")]
+    public bool crystalInseadOfClone;
+
+
+    public void CreateClone(Transform _clonePosition,Vector3 _offset)
     {
-        [Header("Clone info")]
-        [SerializeField] private GameObject clonePrefab;
-        [SerializeField] private float cloneDuration;
-        [Space]
-        [SerializeField] private bool canAttack;
 
-        [SerializeField] private float chanceToDublicate;
-        [SerializeField] private bool createCloneOnDashStart;
-        [SerializeField] private bool createCloneOnDashOver;
-        [SerializeField] private bool canCreateCloneOnCounterAttack;
-        [SerializeField] private bool canDublicateClone;
-    
-
-        public void CreateClone(Transform _clonePosition,Vector3 _offset)
+        if (crystalInseadOfClone)
         {
-            GameObject newClone = Instantiate(clonePrefab);
-            newClone.GetComponent<Clone_Skill_Controller>().SetupClone(_clonePosition,
-                cloneDuration,canAttack,_offset,FindClosestEnemy(newClone.transform),canDublicateClone,chanceToDublicate);
+            SkillManager.instance.crystal.CreateCrystal();
+            return;
         }
 
-        public void CreateCloneOnDashStart()
-        {
-            if(createCloneOnDashStart)
-                CreateClone(player.transform,Vector3.zero);
-        }
-        public void CreateCloneOnDashOver()
-        {
-            if(createCloneOnDashOver)
-                CreateClone(player.transform,Vector3.zero);
-        }
+        GameObject newClone = Instantiate(clonePrefab);
 
-        public void CreateCloneOnCounterAttack(Transform _enemyTransform)
-        {
-            if (canCreateCloneOnCounterAttack)
-            {
-                Vector3 offset = new Vector3(2 * player.facingDir, 0);
-                StartCoroutine(CreateCloneWithDelay(_enemyTransform, offset));
-                Debug.Log(offset);
+        newClone.GetComponent<Clone_Skill_Controller>().
+            SetupClone(_clonePosition, cloneDuration, canAttack,_offset,FindClosestEnemy(newClone.transform),canDuplicateClone,chanceToDuplicate);
+    }
 
-            }
-        }
+    public void CreateCloneOnDashStart()
+    {
+        if (creatCloneOnDashStart)
+            CreateClone(player.transform, Vector3.zero);
+    }
 
-        private IEnumerator CreateCloneWithDelay(Transform _enemyTransform,Vector3 _offset)
-        {
-            yield return new WaitForSeconds(0.4f);
-            CreateClone(_enemyTransform, _offset);
-        }
-        
-        
+    public void CreateCloneOnDashOver()
+    {
+        if (createCloneOnDashOver)
+            CreateClone(player.transform, Vector3.zero);
+    }
+
+    public void CreateCloneOnCounterAttack(Transform _enemyTransform)
+    {
+        if (canCreateCloneOnCounterAttack)
+            StartCoroutine(CreateCloneWithDelay(_enemyTransform, new Vector3(2 * player.facingDir, 0)));
+    }
+
+    private IEnumerator CreateCloneWithDelay(Transform _trasnform,Vector3 _offset)
+    {
+        yield return new WaitForSeconds(.4f);
+        CreateClone(_trasnform,_offset);
     }
 }

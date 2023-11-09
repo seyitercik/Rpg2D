@@ -1,120 +1,124 @@
-using System.Collections;
 using System.Collections.Generic;
 using Skills;
-using Unity.Mathematics;
 using UnityEngine;
-
 
 public class Crystal_Skill : Skill
 {
-    [SerializeField] private GameObject crystalprefab;
     [SerializeField] private float crystalDuration;
+    [SerializeField] private GameObject crystalPrefab;
     private GameObject currentCrystal;
-    private Crystal_Skill_Controller currentCrystalController;
+
     [Header("Crystal mirage")]
     [SerializeField] private bool cloneInsteadOfCrystal;
 
-    [Header("Explosive crystal")] 
+    [Header("Explosive crystal")]
     [SerializeField] private bool canExplode;
 
-    [Header("Moving crystal")] 
+
+    [Header("Moving crystal")]
     [SerializeField] private bool canMoveToEnemy;
     [SerializeField] private float moveSpeed;
 
-    [Header("Multi stacking crystal")] 
-    [SerializeField] private bool canUseMultiStack;
-    [SerializeField] private int amountOfStack;
-    [SerializeField] private float multiStackCooldowm;
-    [SerializeField] private float useTimeWindow;
-    [SerializeField] private List<GameObject> crystalLeft = new List<GameObject>(); 
-    
+
+    [Header("Multi stacking crystal")]
+    [SerializeField] private bool canUseMultiStacks;
+    [SerializeField] private int amountOfStacks;
+    [SerializeField] private float multiStackCooldown;
+    [SerializeField] private float useTimeWondow;
+    [SerializeField] private List<GameObject> crystalLeft = new List<GameObject>();
 
     public override void UseSkill()
     {
         base.UseSkill();
-        
-        if(CanUsemultiCrystal())
-            return; 
-        
-        if (currentCrystal==null)
+
+        if (CanUseMultiCrystal())
+            return;
+
+        if (currentCrystal == null)
         {
-            currentCrystal = Instantiate(crystalprefab,player.transform.position,Quaternion.identity);
-            currentCrystalController = currentCrystal.GetComponent<Crystal_Skill_Controller>();
-            currentCrystalController.SetupCrystal(crystalDuration,moveSpeed,canExplode,
-                canMoveToEnemy,FindClosestEnemy(currentCrystal.transform));
+            CreateCrystal();
+
         }
         else
         {
-            if(canMoveToEnemy)
+            if (canMoveToEnemy)
                 return;
-            
+
             Vector2 playerPos = player.transform.position;
             player.transform.position = currentCrystal.transform.position;
             currentCrystal.transform.position = playerPos;
 
             if (cloneInsteadOfCrystal)
             {
-                SkillManager.instance.clone.CreateClone(currentCrystal.transform,Vector3.zero);
+                SkillManager.instance.clone.CreateClone(currentCrystal.transform, Vector3.zero);
                 Destroy(currentCrystal);
             }
             else
             {
-                
-                currentCrystalController.GetComponent<Crystal_Skill_Controller>()?.FinishCrystal();
+                currentCrystal.GetComponent<Crystal_Skill_Controller>()?.FinishCrystal();
             }
-            
         }
     }
 
-    private bool CanUsemultiCrystal()
+    public void CreateCrystal()
     {
-        if (canUseMultiStack)
+        currentCrystal = Instantiate(crystalPrefab, player.transform.position, Quaternion.identity);
+        Crystal_Skill_Controller currentCystalScript = currentCrystal.GetComponent<Crystal_Skill_Controller>();
+
+        currentCystalScript.SetupCrystal(crystalDuration, canExplode, canMoveToEnemy, moveSpeed, FindClosestEnemy(currentCrystal.transform));
+    }
+
+    public void CurrentCrystalChooseRandomTarget() => currentCrystal.GetComponent<Crystal_Skill_Controller>().ChooseRandomEnemy();
+    private bool CanUseMultiCrystal()
+    {
+        if (canUseMultiStacks)
         {
-            
             if (crystalLeft.Count > 0)
             {
-                if(crystalLeft.Count == amountOfStack)
-                    Invoke("ResetAbblity",useTimeWindow);
-                coolDown = 0;
-                GameObject crystalSpawn = crystalLeft[crystalLeft.Count - 1];
-                GameObject newCrystal = Instantiate(crystalSpawn, player.transform.position, 
-                    Quaternion.identity);
-                
-                crystalLeft.Remove(crystalSpawn);
-                
-                newCrystal.GetComponent<Crystal_Skill_Controller>().SetupCrystal(crystalDuration,moveSpeed,canExplode,
-                    canMoveToEnemy,
-                        FindClosestEnemy(newCrystal.transform));
+                if (crystalLeft.Count == amountOfStacks)
+                    Invoke("ResetAbility", useTimeWondow);
+
+                cooldown = 0;
+                GameObject crystalToSpawn = crystalLeft[crystalLeft.Count - 1];
+                GameObject newCrystal = Instantiate(crystalToSpawn, player.transform.position, Quaternion.identity);
+
+                crystalLeft.Remove(crystalToSpawn);
+
+                newCrystal.GetComponent<Crystal_Skill_Controller>().
+                    SetupCrystal(crystalDuration, canExplode, canMoveToEnemy, moveSpeed, FindClosestEnemy(newCrystal.transform));
+
                 if (crystalLeft.Count <= 0)
                 {
-                    coolDown = multiStackCooldowm;
+                    cooldown = multiStackCooldown;
                     RefilCrystal();
-
                 }
-                
+
+
                 return true;
+
             }
         }
+
 
         return false;
     }
 
     private void RefilCrystal()
     {
-        int amountToAdd = amountOfStack - crystalLeft.Count;
+        int amountToAdd = amountOfStacks - crystalLeft.Count;
+
         for (int i = 0; i < amountToAdd; i++)
         {
-            crystalLeft.Add(crystalprefab);
+            crystalLeft.Add(crystalPrefab);
         }
     }
 
-    private void ResetAbblity()
+    private void ResetAbility()
     {
-        if (coolDownTimer>0)
-        {
+        if (cooldownTimer > 0)
             return;
-        }
-        coolDownTimer = multiStackCooldowm;
+
+        cooldownTimer = multiStackCooldown;
         RefilCrystal();
     }
 }

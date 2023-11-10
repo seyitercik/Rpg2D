@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ namespace Enemy
     
     
         public EnemyStateMachine stateMachine { get; private set; }
+        public String lastAnimBoolName { get; private set; }
 
         protected override void Awake()
         {
@@ -40,6 +42,12 @@ namespace Enemy
             stateMachine.currentState.Update();
         
         }
+
+        public virtual void AssingLastAnimName(String _animBoolName)
+        {
+            lastAnimBoolName = _animBoolName;
+        }
+        
 
         protected virtual IEnumerator FreezeTimerFor(float _seconds)
         {

@@ -19,6 +19,8 @@ namespace DefaultNamespace
         protected override void Die()
         {
             base.Die();
+            player.Die();
         }
+        
     }
 }

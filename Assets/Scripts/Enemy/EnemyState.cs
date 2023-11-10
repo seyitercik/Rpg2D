@@ -33,6 +33,7 @@ namespace Enemy.Skeleton
         public virtual void Exit()
         {
             enemyBase.anim.SetBool(animBoolName,false);
+            enemyBase.AssingLastAnimName(animBoolName);
         
         }
 

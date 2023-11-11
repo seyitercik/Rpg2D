@@ -1,5 +1,8 @@
 
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 public class CharacterStats : MonoBehaviour
 {
         [Header("Major Stats")]
@@ -25,17 +28,55 @@ public class CharacterStats : MonoBehaviour
         public Stat lightingDamage;
 
 
-        public bool isIgnited;
-        public bool isChilled;
-        public bool isShocked;
+        public bool isIgnited; // does damage over time
+        public bool isChilled; // reduce armor by 20% 
+        public bool isShocked; // reduce accuracy by 20%
+
+        private float ignitedTimer;
+        private float chilledTimer;
+        private float shockedTimer;
         
         
-        [SerializeField] private int currentHealth;
+        
+        private float igniteDamageCooldowm;
+        private float ignitteDamageTimer;
+        private int igniteDamage;
+        
+        
+        public int currentHealth;
+
+        public System.Action onHealthChanged;
 
         protected virtual void Start()
         { 
                 critPower.SetDefaultValue(150);
-                currentHealth = maxHealth.GetValue();
+                currentHealth = GetMaxHealthValue();
+        }
+
+        protected virtual void Update()
+        {
+                ignitedTimer -= Time.deltaTime;
+                chilledTimer -= Time.deltaTime;
+                shockedTimer -= Time.deltaTime;
+                
+                ignitteDamageTimer -= Time.deltaTime;
+                if (ignitedTimer < 0)
+                        isIgnited = false;
+                
+                if (chilledTimer < 0)
+                        isChilled = false;
+                
+                if (shockedTimer < 0)
+                        isShocked = false;
+
+                if (ignitteDamageTimer<0 && isIgnited)
+                {
+                        Debug.Log("Take burn Damage" + igniteDamage);
+                        DecreaseHealthBy(igniteDamage);
+                        if(currentHealth<  0)
+                                Die();
+                        ignitteDamageTimer = igniteDamageCooldowm;
+                }
         }
 
         public virtual void DoDamage(CharacterStats _targetStats)
@@ -52,7 +93,8 @@ public class CharacterStats : MonoBehaviour
                 
                 totalDamage = CheckTargetArmor(_targetStats, totalDamage);
 
-                _targetStats.TakeDamage(totalDamage);
+                //_targetStats.TakeDamage(totalDamage);
+                DoMagicalDamage(_targetStats);
         }
 
         public virtual void DoMagicalDamage(CharacterStats _targetStats)
@@ -98,6 +140,9 @@ public class CharacterStats : MonoBehaviour
                         
                 }
                 
+                if(canApplyIgnıte)
+                        _targetStats.SetupIgniteDamage(Mathf.RoundToInt(_fireDamage * .2f));
+                
                 _targetStats.ApplyElements(canApplyIgnıte,canApplyChill,canApplyShock);
 
 
@@ -105,24 +150,50 @@ public class CharacterStats : MonoBehaviour
 
         
 
-        public void ApplyElements(bool _ignite,bool chill, bool _shock)
+        public void ApplyElements(bool _ignite,bool _chill, bool _shock)
         {
                 if(isIgnited|| isChilled || isShocked)
                         return;
-                isIgnited = _ignite;
-                isChilled = chill;
-                isShocked = _shock;
-
+                if (_ignite)
+                {
+                        isIgnited = _ignite;
+                        ignitedTimer = 2;
+                }
+                if (_chill)
+                {
+                        isChilled = _chill;
+                        chilledTimer = 2;
+                }
+                if (_shock)
+                {
+                        isShocked = _shock;
+                        shockedTimer = 2;
+                }
+                
         }
+
+        public void SetupIgniteDamage(int _damage) => igniteDamage = _damage;
+        
 
        
 
         public virtual void TakeDamage(int _damage)
         {
-                currentHealth -= damage.GetValue();
+                DecreaseHealthBy(_damage);
                 if (currentHealth < 0)
                 {
                         Die();
+                }
+
+                onHealthChanged();
+        }
+
+        protected virtual void DecreaseHealthBy(int _damage)
+        {
+                currentHealth -= _damage;
+                if (onHealthChanged != null)
+                {
+                        onHealthChanged();
                 }
         }
 
@@ -132,7 +203,12 @@ public class CharacterStats : MonoBehaviour
         }
         private int CheckTargetArmor(CharacterStats _targetStats, int totalDamage)
         {
-                totalDamage -= _targetStats.armor.GetValue();
+                if (_targetStats.isChilled)
+                        totalDamage -= Mathf.RoundToInt(_targetStats.armor.GetValue() * 0.8f);
+                else
+                        totalDamage -= _targetStats.armor.GetValue();    
+                
+                
                 totalDamage = Mathf.Clamp(totalDamage, 0, int.MaxValue);
                 return totalDamage;
         }
@@ -140,6 +216,10 @@ public class CharacterStats : MonoBehaviour
         private bool  TargetCanAvoidAttack(CharacterStats _targetStats)
         {
                 int totalEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
+
+                if (isShocked)
+                        totalEvasion += 20;
+                
                 if (Random.Range(0, 100) < totalEvasion)
                 {
                         return true;
@@ -169,6 +249,11 @@ public class CharacterStats : MonoBehaviour
                 totalMagicalDamage -= _targetStats.magicResistance.GetValue() + (_targetStats.intelligence.GetValue() * 3);
                 totalMagicalDamage = Mathf.Clamp(totalMagicalDamage, 0, int.MaxValue);
                 return totalMagicalDamage;
+        }
+
+        public int GetMaxHealthValue()
+        {;
+                return maxHealth.GetValue() + vitality.GetValue() * 5;
         }
 
 }

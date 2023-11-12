@@ -1,10 +1,12 @@
 
-using System;
+
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class CharacterStats : MonoBehaviour
 {
+        private EntityFX fx;
+        
         [Header("Major Stats")]
         public Stat strength; // 1 point increase damage by 1 and crit.power by % 1
         public Stat agility; // 1 point increase evasion by 1 and crit.chance by % 1
@@ -32,6 +34,9 @@ public class CharacterStats : MonoBehaviour
         public bool isChilled; // reduce armor by 20% 
         public bool isShocked; // reduce accuracy by 20%
 
+
+
+        [SerializeField] private float ailmentsDuration = 4;
         private float ignitedTimer;
         private float chilledTimer;
         private float shockedTimer;
@@ -51,6 +56,7 @@ public class CharacterStats : MonoBehaviour
         { 
                 critPower.SetDefaultValue(150);
                 currentHealth = GetMaxHealthValue();
+                fx = GetComponent<EntityFX>();
         }
 
         protected virtual void Update()
@@ -157,17 +163,24 @@ public class CharacterStats : MonoBehaviour
                 if (_ignite)
                 {
                         isIgnited = _ignite;
-                        ignitedTimer = 2;
+                        ignitedTimer = ailmentsDuration;
+                        fx.IgniteFxFor(ailmentsDuration);
                 }
                 if (_chill)
                 {
                         isChilled = _chill;
-                        chilledTimer = 2;
+                        chilledTimer = ailmentsDuration;
+
+                        float slowPercentage = .2f;
+                        
+                        GetComponent<Entity>().SlowEntityBy(slowPercentage,ailmentsDuration);
+                        fx.ChillFxFor(ailmentsDuration);
                 }
                 if (_shock)
                 {
                         isShocked = _shock;
-                        shockedTimer = 2;
+                        shockedTimer = ailmentsDuration;
+                        fx.ShockFxFor(ailmentsDuration);
                 }
                 
         }

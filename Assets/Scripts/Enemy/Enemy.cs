@@ -43,11 +43,21 @@ namespace Enemy
         
         }
 
-        public virtual void AssingLastAnimName(String _animBoolName)
+        public virtual void AssingLastAnimName(String _animBoolName) =>lastAnimBoolName = _animBoolName;
+
+        public override void SlowEntityBy(float _slowPercentage, float _slowDuration)
         {
-            lastAnimBoolName = _animBoolName;
+            moveSpeed = moveSpeed * (1 - _slowPercentage);
+            anim.speed = anim.speed - (1 - _slowPercentage); 
+            Invoke("ReturnDefaultSpeed",_slowDuration);
         }
-        
+
+        protected override void ReturnDefaultSpeed()
+        {
+            base.ReturnDefaultSpeed();
+            moveSpeed = defaultMoveSpeed;
+        }
+
 
         protected virtual IEnumerator FreezeTimerFor(float _seconds)
         {

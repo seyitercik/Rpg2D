@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2856347882914127296}
   - component: {fileID: 3444290501020285567}
   m_Layer: 0
-  m_Name: ThunderStrike
+  m_Name: ShockStrike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetStats: {fileID: 0}
-  speed: 5
+  speed: 35
 --- !u!1 &8196819330684098341
 GameObject:
   m_ObjectHideFlags: 0

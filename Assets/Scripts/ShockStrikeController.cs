@@ -5,7 +5,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 
 
-public class ThunderStrikeController : MonoBehaviour
+public class ShockStrikeController : MonoBehaviour
 {
         [SerializeField] private CharacterStats targetStats;
         [SerializeField] private float speed;
@@ -55,6 +55,7 @@ public class ThunderStrikeController : MonoBehaviour
 
         private void DamageAndSelfDestroy()
         {
+                targetStats.ApplyShock(true);
                 
                 targetStats.TakeDamage(damage);
                 Destroy(gameObject,.4f);

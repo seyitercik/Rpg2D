@@ -1,4 +1,4 @@
-using Skills.Skill_Controllers;
+using Controllers.Skill_Controllers;
 using UnityEngine;
 
 namespace Player

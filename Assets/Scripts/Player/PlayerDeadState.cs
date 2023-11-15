@@ -1,33 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using Player;
-using UnityEngine;
-
-public class PlayerDeadState : PlayerState
+namespace Player
 {
-    public PlayerDeadState(Player.Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+    public class PlayerDeadState : PlayerState
     {
-    }
-    public override void Enter()
-    {
-        base.Enter();
-    }
+        public PlayerDeadState(global::Player.Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+        {
+        }
+        public override void Enter()
+        {
+            base.Enter();
+        }
 
-    public override void Update()
-    {
-        base.Update();
-        player.SetZeroVelocity();
-    }
+        public override void Update()
+        {
+            base.Update();
+            player.SetZeroVelocity();
+        }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
+        public override void Exit()
+        {
+            base.Exit();
+        }
 
-    public override void AnimationFinishTrigger()
-    {
-        base.AnimationFinishTrigger();
-    }
+        public override void AnimationFinishTrigger()
+        {
+            base.AnimationFinishTrigger();
+        }
 
    
+    }
 }

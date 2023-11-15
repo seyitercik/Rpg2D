@@ -1,4 +1,4 @@
-namespace DefaultNamespace
+namespace Stats
 {
     public class EnemyStats : CharacterStats
     {
@@ -12,7 +12,7 @@ namespace DefaultNamespace
         public override void TakeDamage(int _damage)
         {
             base.TakeDamage(_damage);
-            enemy.DamageEffect();
+            
         }
 
         protected override void Die()

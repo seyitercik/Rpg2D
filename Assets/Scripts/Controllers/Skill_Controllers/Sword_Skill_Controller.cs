@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using Stats;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Skills.Skill_Controllers
+namespace Controllers.Skill_Controllers
 {
     public class Sword_Skill_Controller : MonoBehaviour
     {
@@ -187,7 +187,7 @@ namespace Skills.Skill_Controllers
                     foreach (var hit in colliders)
                     {
                         if (hit.GetComponent<Enemy.Enemy>() != null)
-                            hit.GetComponent<Enemy.Enemy>().DamageEffect();
+                            hit.GetComponent<Enemy.Enemy>().DamageImpact();
                         
                     }
                 }
@@ -210,7 +210,7 @@ namespace Skills.Skill_Controllers
 
         private void SwordSkillDamage(Enemy.Enemy enemy)
         {
-            enemy.DamageEffect();
+            player.stats.DoDamage(enemy.GetComponent<CharacterStats>());
             enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration);
         }
 

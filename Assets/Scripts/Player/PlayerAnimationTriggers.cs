@@ -1,5 +1,5 @@
-using DefaultNamespace;
 using Skills;
+using Stats;
 using UnityEngine;
 
 namespace Player

@@ -1,4 +1,4 @@
-using DefaultNamespace;
+using Stats;
 using UnityEngine;
 
 namespace Enemy.Skeleton

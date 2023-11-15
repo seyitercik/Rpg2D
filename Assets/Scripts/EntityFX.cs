@@ -24,6 +24,13 @@ public class EntityFX : MonoBehaviour
       sr = GetComponentInChildren<SpriteRenderer>();
       orijinalMaterial = sr.material;
    }
+   public void MakeTransprent(bool _transprent)
+   {
+       if (_transprent)
+           sr.color = Color.clear;
+       else
+           sr.color = Color.white;
+   }
 
    private IEnumerator FlashFx()
    {

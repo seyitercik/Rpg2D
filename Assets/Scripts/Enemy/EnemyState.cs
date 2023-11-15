@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Enemy.Skeleton
+namespace Enemy
 {
     public class EnemyState
     {

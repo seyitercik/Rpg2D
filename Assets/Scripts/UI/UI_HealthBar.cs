@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class HealthBar_UI : MonoBehaviour
+    public class UI_HealthBar : MonoBehaviour
     {
         private CharacterStats myStats;
         private Entity entity;

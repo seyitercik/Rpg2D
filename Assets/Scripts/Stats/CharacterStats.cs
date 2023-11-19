@@ -16,7 +16,6 @@ namespace Stats
                 public Stat intelligence; // 1 point increase magic damage by 1 and magic resistance by 3
                 public Stat vitality; // 1 point increase healt by 3 or 5 points
                 [Header("Defensive Stats")]
-        
                 public Stat maxHealth;
                 public Stat armor;
                 public Stat evasion;

@@ -11,11 +11,13 @@ namespace Stats
         [SerializeField] private float percantageModifier = .4f;
         
         private Enemy.Enemy enemy;
+        private ItemDrop myDropSystem;
         protected override void Start()
         {
             ApplyLevelModifiers();
             base.Start();
             enemy = GetComponent<Enemy.Enemy>();
+            myDropSystem = GetComponent<ItemDrop>();
         }
 
         private void ApplyLevelModifiers()
@@ -57,8 +59,10 @@ namespace Stats
 
         protected override void Die()
         {
+           
             base.Die();
             enemy.Die();
+            myDropSystem.GenerateDrop();
         }
     }
 }

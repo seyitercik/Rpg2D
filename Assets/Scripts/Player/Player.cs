@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
+    
     public class Player : Entity
     {
         [Header("Attack info")] 

@@ -9,9 +9,7 @@ public class ItemDrop : MonoBehaviour
    [SerializeField] private int possibleItemDrop;
    [SerializeField] private ItemData[] possibleDrop;
    [SerializeField] private GameObject dropPrefabs;
-   [SerializeField] private ItemData item;
-
-   public void GenerateDrop()
+   public virtual void GenerateDrop()
    {
       for (int i = 0; i < possibleDrop.Length; i++)
       {
@@ -29,7 +27,7 @@ public class ItemDrop : MonoBehaviour
    }
 
 
-   public void DropItem(ItemData _itemData)
+   protected void DropItem(ItemData _itemData)
    {
       GameObject newDrop = Instantiate(dropPrefabs, transform.position, Quaternion.identity);
       Vector2 randomVelocity = new Vector2(Random.Range(-5, 5), Random.Range(12, 15));

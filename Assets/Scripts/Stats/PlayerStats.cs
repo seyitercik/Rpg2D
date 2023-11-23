@@ -20,6 +20,7 @@ namespace Stats
         {
             base.Die();
             player.Die();
+            GetComponent<PlayerItemDrop>()?.GenerateDrop();
         }
         
     }

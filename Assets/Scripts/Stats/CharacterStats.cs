@@ -55,7 +55,7 @@ namespace Stats
                 public int currentHealth;
 
                 public System.Action onHealthChanged;
-                protected bool isDead;
+                public bool isDead { get; private set; }
 
                 protected virtual void Start()
                 { 
@@ -82,6 +82,7 @@ namespace Stats
                         if(isIgnited) 
                                 ApplyIgniteDamage();
                 }
+                
 
                     
                 
@@ -246,6 +247,7 @@ namespace Stats
                                 if (currentHealth < 0 )
                                 {
                                         Die();
+                                     isIgnited = false;
                                 }
 
                                 ignitteDamageTimer = igniteDamageCooldowm;

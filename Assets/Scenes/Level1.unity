@@ -16550,6 +16550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d6ea3be48cad348aa605241b0b9b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingItem: []
   equipment: []
   inventory: []
   stash: []

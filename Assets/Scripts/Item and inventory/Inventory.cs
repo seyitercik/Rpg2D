@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
+    [FormerlySerializedAs("startingEquipment")] public List<ItemData> startingItem;
 
     public List<InventoryItem> equipment;
     public Dictionary<ItemData_Equipment, InventoryItem> equipmentDictionary;
@@ -49,7 +50,18 @@ public class Inventory : MonoBehaviour
         equipmentDictionary = new Dictionary<ItemData_Equipment, InventoryItem>();
         equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
 
+        AddStartingItems();
+
     }
+
+    private void AddStartingItems()
+    {
+        for (int i = 0; i < startingItem.Count; i++)
+        {
+            AddItem(startingItem[i]);
+        }
+    }
+
     public void EquipItem(ItemData _item)
     {
         ItemData_Equipment newEquipment = _item as ItemData_Equipment;
@@ -198,7 +210,6 @@ public class Inventory : MonoBehaviour
         }
         UpdateSlotUI();
     }
-
     public bool CanCraft(ItemData_Equipment _itemToCraft,List<InventoryItem> _requiredMaterials)
     {
         List<InventoryItem> materialsToRemove = new List<InventoryItem>();
@@ -234,5 +245,7 @@ public class Inventory : MonoBehaviour
         return true;
 
     }
-  
+
+    public List<InventoryItem> GetEquipmentList() => equipment;
+
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Stats
@@ -57,12 +58,18 @@ namespace Stats
             
         }
 
+        private void DestroyEnemy()
+        {
+            Destroy(gameObject);
+        }
+
         protected override void Die()
         {
            
             base.Die();
             enemy.Die();
             myDropSystem.GenerateDrop();
+            Invoke("DestroyEnemy",2);
         }
     }
 }

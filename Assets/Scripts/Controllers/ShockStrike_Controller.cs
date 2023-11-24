@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Controllers
 {
-        public class ShockStrikeController : MonoBehaviour
+        public class ShockStrike_Controller : MonoBehaviour
         {
                 [SerializeField] private CharacterStats targetStats;
                 [SerializeField] private float speed;

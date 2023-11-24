@@ -24,8 +24,10 @@ namespace Player
                                         EnemyStats _target = hit.GetComponent<EnemyStats>();
                                         player.stats.DoDamage(_target);
                                        // hit.GetComponent<Enemy.Enemy>().Damage();
-                                        
-                                        
+                                       ItemData_Equipment weaponData = Inventory.instance.GetEquipment(EquipmentType.Weapon);
+                                       if(weaponData!=null)
+                                               weaponData.Effect(_target.transform);
+
                                 }
                         }
                        
@@ -35,5 +37,12 @@ namespace Player
                 {
                         SkillManager.instance.sword.CreateSword();
                 }
+
+                /*private void WeaponEffect()
+                {
+                        ItemData_Equipment weaponData = Inventory.instance.GetEquipment(EquipmentType.Weapon);
+                        if(weaponData!=null)
+                                weaponData.Effect();
+                }*/
         }
 }

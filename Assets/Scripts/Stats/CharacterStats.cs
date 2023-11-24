@@ -286,7 +286,7 @@ namespace Stats
                         {
                                 GameObject newShockStrike = Instantiate(shockStrikePrefab, transform.position,
                                         Quaternion.identity);
-                                newShockStrike.GetComponent<ShockStrikeController>()
+                                newShockStrike.GetComponent<ShockStrike_Controller>()
                                         .Setup(shockDamage, closestEnemy.GetComponent<CharacterStats>());
                         }
                 }

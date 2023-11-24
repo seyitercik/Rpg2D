@@ -7,6 +7,7 @@ public class PlayerItemDrop : ItemDrop
 {
    [Header("Player's drop ")] 
    [SerializeField] private float chanceToLoseItems;
+   [SerializeField] private float chanceToLoseMaterials;
 
    
    
@@ -14,11 +15,10 @@ public class PlayerItemDrop : ItemDrop
    public override void GenerateDrop()
    {
        Inventory inventory = Inventory.instance;
-       
-       List<InventoryItem> currentEquipment = inventory.GetEquipmentList();
        List<InventoryItem> itemsToUnEquip = new List<InventoryItem>();
+       List<InventoryItem> materialsToLoose = new List<InventoryItem>();
        
-       foreach (InventoryItem item in currentEquipment)
+       foreach (InventoryItem item in  inventory.GetEquipmentList())
        {
            if (Random.Range(0, 100) <= chanceToLoseItems)
            {
@@ -26,14 +26,26 @@ public class PlayerItemDrop : ItemDrop
                DropItem(item.data);
                itemsToUnEquip.Add(item);
            }
-
-           for (int i = 0; i < itemsToUnEquip.Count; i++)
-           {
-               inventory.UnEquipItem(itemsToUnEquip[i].data as ItemData_Equipment);
-           }
-
-          
-
        }
+       
+       for (int i = 0; i < itemsToUnEquip.Count; i++)
+       {
+           inventory.UnEquipItem(itemsToUnEquip[i].data as ItemData_Equipment);
+       }
+
+       foreach (InventoryItem item in inventory.GetStashList())
+       {
+           if(Random.Range(0,100) <= chanceToLoseMaterials)
+               DropItem(item.data);
+           materialsToLoose.Add(item);
+           
+       }
+
+       for (int i = 0; i < materialsToLoose.Count; i++)
+       {
+           inventory.RemoveItem(materialsToLoose[i].data);
+       }
+       
+
    }
 }

@@ -58,10 +58,7 @@ namespace Stats
             
         }
 
-        private void DestroyEnemy()
-        {
-            Destroy(gameObject);
-        }
+      
 
         protected override void Die()
         {
@@ -69,7 +66,7 @@ namespace Stats
             base.Die();
             enemy.Die();
             myDropSystem.GenerateDrop();
-            Invoke("DestroyEnemy",2);
+            Destroy(gameObject,2f);
         }
     }
 }

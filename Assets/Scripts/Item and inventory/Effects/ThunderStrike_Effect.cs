@@ -4,9 +4,9 @@ using UnityEngine;
 public class ThunderStrike_Effect : ItemEffect
 {
     [SerializeField] private GameObject thunderStrikePrefabs;
-    public override void ExecuteEffect(Transform _enemyPosition)
+    public override void ExecuteEffect(Transform _respawnPosition)
     {
-        GameObject newThunderStrike = Instantiate(thunderStrikePrefabs,_enemyPosition.position,Quaternion.identity);
+        GameObject newThunderStrike = Instantiate(thunderStrikePrefabs,_respawnPosition.position,Quaternion.identity);
         Destroy(newThunderStrike,1);
 
     }

@@ -22,8 +22,10 @@ namespace Player
                                 if (hit.GetComponent<Enemy.Enemy>() != null)
                                 {
                                         EnemyStats _target = hit.GetComponent<EnemyStats>();
-                                        player.stats.DoDamage(_target);
-                                       // hit.GetComponent<Enemy.Enemy>().Damage();
+                                        if (_target!=null)
+                                                player.stats.DoDamage(_target);
+                                        
+                                        // hit.GetComponent<Enemy.Enemy>().Damage();
                                        ItemData_Equipment weaponData = Inventory.instance.GetEquipment(EquipmentType.Weapon);
                                        if(weaponData!=null)
                                                weaponData.Effect(_target.transform);

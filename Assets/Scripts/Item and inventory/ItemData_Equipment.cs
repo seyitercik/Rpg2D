@@ -16,6 +16,7 @@ public enum EquipmentType
 [CreateAssetMenu(fileName = "New Item Data",menuName = "Data/Equipment")]
 public class ItemData_Equipment : ItemData
 {
+    public float itemCooldowm;
     public EquipmentType equipmentType;
     public ItemEffect[] itemEffects;
     

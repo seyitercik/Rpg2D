@@ -23,6 +23,11 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform inventorySlotParent;
     [SerializeField] private Transform stashSlotParent;
     [SerializeField] private Transform equipmentSlotParent;
+
+    [Header("ıtems cooldowm")] 
+    
+    private float lastTimeUsedFlask;
+    
     
     
      private UI_ItemSlot[] inventoryItemSlot;
@@ -258,7 +263,25 @@ public class Inventory : MonoBehaviour
                 equipItem = item.Key;
         }
 
-        return equipItem;
+        return equipItem;   
+    }
+
+    public void UseFlask()
+    {
+        ItemData_Equipment currentFlask = GetEquipment(EquipmentType.Flask);
+        if(currentFlask==null)
+            return;
+        bool canUseFlask = Time.time > lastTimeUsedFlask + currentFlask.itemCooldowm;
+        if (canUseFlask)
+        {
+            currentFlask.Effect(null);
+            lastTimeUsedFlask = Time.time;
+        }
+        else
+        {
+            Debug.Log("Flask on cooldowm");
+        }
+
     }
 
 }

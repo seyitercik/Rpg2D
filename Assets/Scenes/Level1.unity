@@ -15857,6 +15857,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d1a6b53331aebaa42855f748b97df02b, type: 2}
   - {fileID: 11400000, guid: ae4290c23eed06a4e90c41a2e8d61f76, type: 2}
   - {fileID: 11400000, guid: 965ede9ee6550224ca75261f1002e0ff, type: 2}
+  - {fileID: 11400000, guid: 565cbe35339977e4e90a7a67c230b728, type: 2}
+  - {fileID: 11400000, guid: cdf0cb17dfe6b164d906c0df7d751e68, type: 2}
+  - {fileID: 11400000, guid: 9d3ccdf09f1f84c4ba57dcdbc7a2ccf5, type: 2}
   equipment: []
   inventory:
   - data: {fileID: 11400000, guid: ae4290c23eed06a4e90c41a2e8d61f76, type: 2}

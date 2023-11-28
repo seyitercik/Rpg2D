@@ -1,0 +1,16 @@
+
+using Stats;
+using UnityEngine;
+[CreateAssetMenu(fileName = "Heal effect",menuName = "Data/Item Effect/Heal effect")]
+public class Heal_Effect :ItemEffect
+{
+  [Range(0f,1f)]
+  [SerializeField] private float healPercent;
+  public override void ExecuteEffect(Transform _respawnPosition)
+  {
+    PlayerStats playerStats = PlayerManager.instance.player.GetComponent<PlayerStats>();
+    int healAmount = Mathf.RoundToInt(playerStats.GetMaxHealthValue() * healPercent);
+    playerStats.IncreaseHealthBy(healAmount);
+
+  }
+}

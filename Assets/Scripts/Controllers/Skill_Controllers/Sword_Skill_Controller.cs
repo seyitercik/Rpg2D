@@ -127,12 +127,12 @@ namespace Controllers.Skill_Controllers
                 if (wasStopped)
                 {
                     spinTimer -= Time.deltaTime;
-                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(
-                        transform.position.x + spinDirection, transform.position.y), 1.5f * Time.deltaTime);
+                    /*transform.position = Vector2.MoveTowards(transform.position, new Vector2(
+                        transform.position.x + spinDirection, transform.position.y), 1.5f * Time.deltaTime);*/
                     if (spinTimer < 0)
                     {
-                        isSpining = false;
                         isReturning = true;
+                        isSpining = false;
                     }
 
                     hitTimer -= Time.deltaTime;
@@ -212,6 +212,12 @@ namespace Controllers.Skill_Controllers
         {
             player.stats.DoDamage(enemy.GetComponent<CharacterStats>());
             enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration);
+            
+            ItemData_Equipment equipedAmulet = Inventory.instance.GetEquipment(EquipmentType.Amulet);
+            if (equipedAmulet != null)
+            {
+                equipedAmulet.Effect(enemy.transform);
+            }
         }
 
         private void SetupTargetsBounce(Collider2D collision)

@@ -15861,18 +15861,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cdf0cb17dfe6b164d906c0df7d751e68, type: 2}
   - {fileID: 11400000, guid: 9d3ccdf09f1f84c4ba57dcdbc7a2ccf5, type: 2}
   equipment: []
-  inventory:
-  - data: {fileID: 11400000, guid: ae4290c23eed06a4e90c41a2e8d61f76, type: 2}
-    stackSize: 3
-  - data: {fileID: 11400000, guid: d1a6b53331aebaa42855f748b97df02b, type: 2}
-    stackSize: 4
-  - data: {fileID: 11400000, guid: 27f60080d73601f4c86db7767146e34a, type: 2}
-    stackSize: 1
-  - data: {fileID: 11400000, guid: 8465f70abe97cbc4f9e4f718380bead3, type: 2}
-    stackSize: 1
-  stash:
-  - data: {fileID: 11400000, guid: d1a6b53331aebaa42855f748b97df02b, type: 2}
-    stackSize: 5
+  inventory: []
+  stash: []
   inventorySlotParent: {fileID: 1547227411}
   stashSlotParent: {fileID: 243490285}
   equipmentSlotParent: {fileID: 1535133529}

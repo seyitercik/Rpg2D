@@ -59,7 +59,7 @@ namespace Enemy
         }
 
 
-        protected virtual IEnumerator FreezeTimerFor(float _seconds)
+        protected virtual IEnumerator FreezeTimerCorountine(float _seconds)
         {
             FreezeTime(true);
             yield return new WaitForSeconds(_seconds);
@@ -79,6 +79,9 @@ namespace Enemy
                 anim.speed = 1;
             }
         }
+
+        public virtual void FreezeTimeFor(float _duration) => StartCoroutine(FreezeTimerCorountine(_duration));
+      
             
 
         public virtual void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();

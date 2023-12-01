@@ -1,3 +1,4 @@
+using System.Collections;
 using Controllers;
 using Stats;
 using UnityEngine;
@@ -82,11 +83,20 @@ namespace Stats
                         if(isIgnited) 
                                 ApplyIgniteDamage();
                 }
-                
 
-                    
-                
+                public virtual void IncreaseStatBy(int _modefier,float _duration,Stat _statToModify)
+                {
+                        StartCoroutine(StatModCoroutine(_modefier, _duration, _statToModify));
 
+                }
+
+                 private  IEnumerator StatModCoroutine(int _modefier,float _duration,Stat _statToModify)
+                {
+                        _statToModify.AddModifier(_modefier);
+                        yield return new WaitForSeconds(_duration);
+                        _statToModify.RemoveModifier(_modefier);
+                }
+               
                 public virtual void DoDamage(CharacterStats _targetStats)
                 {
                         if (TargetCanAvoidAttack(_targetStats))
@@ -102,7 +112,7 @@ namespace Stats
                         totalDamage = CheckTargetArmor(_targetStats, totalDamage);
 
                         _targetStats.TakeDamage(totalDamage);
-                        //DoMagicalDamage(_targetStats);
+                        DoMagicalDamage(_targetStats);
                 }
                 public virtual void TakeDamage(int _damage)
                 {

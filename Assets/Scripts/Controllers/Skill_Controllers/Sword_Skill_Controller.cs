@@ -211,7 +211,7 @@ namespace Controllers.Skill_Controllers
         private void SwordSkillDamage(Enemy.Enemy enemy)
         {
             player.stats.DoDamage(enemy.GetComponent<CharacterStats>());
-            enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration);
+            enemy.StartCoroutine("FreezeTimerCorountine", freezeTimeDuration);
             
             ItemData_Equipment equipedAmulet = Inventory.instance.GetEquipment(EquipmentType.Amulet);
             if (equipedAmulet != null)
